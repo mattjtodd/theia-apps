@@ -1,11 +1,11 @@
 ARG NODE_VERSION=10
-FROM ibmcom/ibmjava:8-sdk as java-base
+FROM openjdk:11 as java-base
 
 FROM node:$NODE_VERSION
-COPY --from=java-base /opt/ibm/java /opt/ibm/java
+COPY --from=java-base /usr/local/openjdk-11 /usr/local/openjdk-11
 
-ENV JAVA_HOME=/opt/ibm/java \
-    PATH=/opt/ibm/java/jre/bin:/opt/ibm/java/bin/:$PATH
+ENV JAVA_HOME=/usr/local/openjdk-11
+ENV PATH=$JAVA_HOME/jre/bin:$JAVA_HOME/bin:$PATH
 
 RUN apt-get update && \
   apt-get install -y curl apt-transport-https maven gradle && \
